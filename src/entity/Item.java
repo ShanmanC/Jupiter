@@ -1,4 +1,3 @@
-
 package entity;
 
 import java.util.Set;
@@ -8,9 +7,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class Item {
-
-
-
     private String itemId;
     private String name;
     private double rating;
@@ -19,6 +15,7 @@ public class Item {
     private String imageUrl;
     private String url;
     private double distance;
+
     /**
      * This is a builder pattern in Java.
      */
@@ -33,27 +30,51 @@ public class Item {
         this.distance = builder.distance;
     }
 
+    public JSONObject toJSONObject() {
+        JSONObject obj = new JSONObject();
+        try {
+            obj.put("item_id", itemId);
+            obj.put("name", name);
+            obj.put("rating", rating);
+            obj.put("address", address);
+            obj.put("categories", new JSONArray(categories));
+            obj.put("image_url", imageUrl);
+            obj.put("url", url);
+            obj.put("distance", distance);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return obj;
+    }
+
     public String getItemId() {
         return itemId;
     }
+
     public String getName() {
         return name;
     }
+
     public double getRating() {
         return rating;
     }
+
     public String getAddress() {
         return address;
     }
+
     public Set<String> getCategories() {
         return categories;
     }
+
     public String getImageUrl() {
         return imageUrl;
     }
+
     public String getUrl() {
         return url;
     }
+
     public double getDistance() {
         return distance;
     }
@@ -100,23 +121,18 @@ public class Item {
             this.distance = distance;
         }
 
-    }
-    public JSONObject toJSONObject() {
-        JSONObject obj = new JSONObject();
-        try {
-            obj.put("item_id", itemId);
-            obj.put("name", name);
-            obj.put("rating", rating);
-            obj.put("address", address);
-            obj.put("categories", new JSONArray(categories));
-            obj.put("image_url", imageUrl);
-            obj.put("url", url);
-            obj.put("distance", distance);
-        } catch (JSONException e) {
-            e.printStackTrace();
+        public Item build() {
+            return new Item(this);
         }
-        return obj;
     }
-
 
 }
+
+
+
+// ItemBuilder itemBuilder = new ItemBuilder();
+// itemBuilder.setName().setItemId();
+// Item item = itemBuilder.build();
+// JSONObject obj = item.toJSONObject();
+
+
